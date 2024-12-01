@@ -1,6 +1,6 @@
-(ns aoc2023.core-test
+(ns aoc2024.core-test
   (:require [clojure.test :refer :all]
-            [aoc2023.core :refer :all]))
+            [aoc2024.core :refer :all]))
 
 (deftest test-avg
   (testing "avg"
