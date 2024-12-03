@@ -11,6 +11,7 @@
   "parse a string into trimmed lines"
   [str-data]
   (->> str-data
+    str/trim
     str/split-lines))
 
 (defn all-range
