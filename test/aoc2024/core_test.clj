@@ -6,11 +6,8 @@
   (testing "avg"
     (is (= 2 (avg [1 2 3])))
     (is (= 2 (avg [2])))
+    (is (= 3/2 (avg [1 2])))
     (is (nil? (avg [])))))
-
-(deftest test-file->lines
-  (testing "file->lines"
-    (is (= ["" "1" "2"] (file->lines "test/aoc2024/file.txt")))))
 
 (deftest test-all-range
   (are [expected actual] (= expected actual)

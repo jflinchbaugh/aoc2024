@@ -13,13 +13,6 @@
   (->> str-data
     str/split-lines))
 
-(defn file->lines
-  "read a local named file and parse it into trimmed lines"
-  [file-name]
-  (->> file-name
-    slurp
-    str->lines))
-
 (defn all-range
   "produce an inclusive range in either direction"
   [s e]
