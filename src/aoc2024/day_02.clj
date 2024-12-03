@@ -2,6 +2,12 @@
   (:require [aoc2024.core :refer :all]
             [clojure.string :as str]))
 
+(defn small-steps-up? [rs]
+  (every? #{1 2 3} rs))
+
+(defn small-steps-down? [rs]
+  (every? #{-1 -2 -3} rs))
+
 (defn safe? [reports]
   (->>
     reports
@@ -9,8 +15,8 @@
     (map (fn [[a b]] (- a b)))
     ((fn [rs]
        (or
-         (every? #{1 2 3} rs)
-         (every? #{-1 -2 -3} rs)))))
+         (small-steps-up? rs)
+         (small-steps-down? rs)))))
 
   )
 
