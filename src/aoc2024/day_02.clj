@@ -35,6 +35,7 @@
        part-1)
   ;; => 479
   )
+
 (defn dampen [reports]
   (cons reports
         (for [to-remove (range (count reports))]
