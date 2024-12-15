@@ -41,10 +41,10 @@
         next-pos (move-guard current-pos)]
     (cond
       ((set steps) next-pos)
-      steps
+      [:loop steps]
 
       (out? dimensions next-pos)
-      steps
+      [:out steps]
 
       (obstacles (rest next-pos))
       (recur dimensions obstacles (cons (turn-guard current-pos) steps))
@@ -74,6 +74,7 @@
     (->> guard
          list
          (move dimensions obstacles)
+         second
          dedup
          count)))
 
