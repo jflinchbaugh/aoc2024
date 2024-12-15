@@ -32,7 +32,6 @@
                  (fn [s]
                    (map parse-long (str/split s #",")))
                  update-source)
-        after-map (update-vals (group-by first order) (partial map second))
         before-map (update-vals (group-by second order) (partial map first))]
     (->> updates
          (filter (partial in-order? before-map))
@@ -50,9 +49,6 @@
 
 (defn order-updates [rules update-lst]
   (let [used-rules (filter (partial used-rule? update-lst) rules)
-        after-map (update-vals
-                   (group-by first used-rules)
-                   (fn [c] (count (map second c))))
         before-map (update-vals
                     (group-by second used-rules)
                     (fn [c] (count (map first c))))]
