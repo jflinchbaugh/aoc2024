@@ -36,7 +36,6 @@
   (or (> 0 x) (> 0 y) (<= dx x) (<= dy y)))
 
 (defn move [dimensions obstacles steps]
-  (prn steps)
   (let [current-pos (first steps)
         next-pos (move-guard current-pos)]
     (cond
@@ -82,7 +81,55 @@
   (->> "input/day_06.txt"
        slurp
        part-1)
+
   ;; => 4433
 
   .)
 
+(defn part-2 [input]
+  (let [src-map (->> input
+                     parse-map)
+        dimensions [(->> src-map
+                         (map second)
+                         (apply max)
+                         inc)
+                    (->> src-map
+                         (map (fn [c] (nth c 2)))
+                         (apply max)
+                         inc)]
+        guard (->> src-map
+                   (filter (fn [[c _ _]] (heading c)))
+                   (map (fn [[h x y]] [(heading h) x y]))
+                   first)
+        obstacles (->> src-map
+                       (filter (fn [[c _ _]] (= \# c)))
+                       (map rest)
+                       set)
+        guard-path (->> guard
+                        list
+                        (move dimensions obstacles)
+                        second
+                        dedup
+                        seq)]
+    (->>
+      guard-path
+      (remove #{(rest guard)})
+      (pmap
+        (fn [block]
+          (let [obstacles (conj obstacles block)
+                new-guard-path (->> guard
+                                 list
+                                 (move dimensions obstacles))]
+            (first new-guard-path))))
+      (filter #{:loop})
+      count
+     )))
+
+(comment
+  (->> "input/day_06.txt"
+       slurp
+       part-2)
+  ;; => 1516
+
+
+  .)

@@ -17,3 +17,6 @@
 
 (t/deftest test-part-1
   (t/is (= 41 (part-1 input-1))))
+
+(t/deftest test-part-2
+  (t/is (= 6 (part-2 input-1))))
