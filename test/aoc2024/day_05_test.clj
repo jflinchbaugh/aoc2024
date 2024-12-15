@@ -35,3 +35,6 @@
 
 (t/deftest test-part-1
   (t/is (= 143 (part-1 input-1))))
+
+(t/deftest test-part-2
+  (t/is (= 123 (part-2 input-1))))
