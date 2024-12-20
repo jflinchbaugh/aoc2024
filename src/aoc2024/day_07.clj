@@ -37,7 +37,7 @@
        (map parse-long (str/split s #"\D+")))))
    (filter computes?)
    (map first)
-   #_(reduce +)))
+   (reduce +)))
 
 (comment
   (->> "input/day_07.txt"
