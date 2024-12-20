@@ -17,12 +17,12 @@
       (o acc n))
     0)))
 
-(defn computes? [[ans operands]]
+(defn computes? [operators [ans operands]]
   (->>
    operands
    count
    dec
-   (select-operators [+ *])
+   (select-operators operators)
    (map (partial cons +))
    (map (partial calc operands))
    (some (partial = ans))))
@@ -35,7 +35,7 @@
     (fn [s]
       ((juxt first rest)
        (map parse-long (str/split s #"\D+")))))
-   (filter computes?)
+   (filter (partial computes? [+ *]))
    (map first)
    (reduce +)))
 
