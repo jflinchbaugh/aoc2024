@@ -3,7 +3,7 @@
             [clojure.string :as str]
             [clojure.math.combinatorics :as combo]))
 
-(def operators (partial combo/selections [* +]))
+(def select-operators (partial combo/selections [* +]))
 
 (defn collate [n o] [n o])
 
@@ -22,7 +22,7 @@
    operands
    count
    dec
-   operators
+   select-operators
    (map (partial cons +))
    (map (partial calc operands))
    (some (partial = ans))))
