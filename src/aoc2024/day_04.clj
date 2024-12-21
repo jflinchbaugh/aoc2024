@@ -2,18 +2,6 @@
   (:require [aoc2024.core :refer :all]
             [clojure.string :as str]))
 
-(defn grid [chars]
-  (for [y (range (count chars))
-        x (range (count (first chars)))]
-    [x y]))
-
-(defn parse-word-search [input]
-  (let [chars (->> input
-                   str->lines
-                   (mapv vec))]
-    (for [coord (grid chars)]
-      (cons (get-in chars coord) coord))))
-
 (defn make-segment [[dx dy] [x y]]
   (for [step (range 4)]
     (let [nx (+ (* dx step) x)
@@ -54,7 +42,7 @@
 (defn part-1 [input]
   (let [letters (->>
                  input
-                 (parse-word-search))
+                 (parse-grid))
         starts (->>
                 letters
                 (filter (comp #{\X} first))
@@ -94,7 +82,7 @@
 (defn part-2 [input]
   (let [letters (->>
                  input
-                 (parse-word-search))
+                 (parse-grid))
         starts (->>
                 letters
                 (filter (comp #{\A} first))

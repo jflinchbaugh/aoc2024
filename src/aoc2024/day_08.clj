@@ -3,18 +3,6 @@
             [clojure.string :as str]
             [clojure.math.combinatorics :as combo]))
 
-(defn grid [chars]
-  (for [y (range (count chars))
-        x (range (count (first chars)))]
-    [x y]))
-
-(defn parse-map [input]
-  (let [chars (->> input
-                   str->lines
-                   (mapv vec))]
-    (for [coord (grid chars)]
-      (cons (get-in chars coord) coord))))
-
 (defn dist [[ax ay] [bx by]]
   [(- ax bx) (- ay by)])
 
@@ -38,7 +26,7 @@
    (<= 0 y) (>= max-y y)))
 
 (defn part-1 [input]
-  (let [whole-map (parse-map input)
+  (let [whole-map (parse-grid input)
         max-x (->> whole-map (map second) (apply max))
         max-y (->> whole-map (map (comp first (partial drop 2))) (apply max))
         antennas (->>
@@ -64,15 +52,10 @@
 
   .)
 
-(defn gcd [a b]
-  (if (zero? b)
-    a
-    (recur b (mod a b))))
-
 (defn dist-simplified [[ax ay] [bx by]]
   (let [dx (- ax bx)
         dy (- ay by)
-        s (gcd (abs dx) (abs dy))]
+        s (gcd dx dy)]
     [(/ dx s) (/ dy s)]))
 
 (defn antinodes-more [steps [antenna-a antenna-b]]
@@ -90,7 +73,7 @@
    (mapcat antinodes)))
 
 (defn part-2 [input]
-  (let [whole-map (parse-map input)
+  (let [whole-map (parse-grid input)
         max-x (->> whole-map (map second) (apply max))
         max-y (->> whole-map (map (comp first (partial drop 2))) (apply max))
         antennas (->>

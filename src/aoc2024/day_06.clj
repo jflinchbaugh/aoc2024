@@ -2,18 +2,6 @@
   (:require [aoc2024.core :refer :all]
             [clojure.string :as str]))
 
-(defn grid [chars]
-  (for [y (range (count chars))
-        x (range (count (first chars)))]
-    [x y]))
-
-(defn parse-map [input]
-  (let [chars (->> input
-                   str->lines
-                   (mapv vec))]
-    (for [coord (grid chars)]
-      (cons (get-in chars (reverse coord)) coord))))
-
 (def heading {\^ :up \> :right \< :left \v :down})
 
 (def step {:up [0 -1] :right [1 0] :left [-1 0] :down [0 1]})
@@ -53,7 +41,7 @@
 
 (defn part-1 [input]
   (let [src-map (->> input
-                     parse-map)
+                     parse-grid)
         dimensions [(->> src-map
                          (map second)
                          (apply max)
@@ -88,7 +76,7 @@
 
 (defn part-2 [input]
   (let [src-map (->> input
-                     parse-map)
+                     parse-grid)
         dimensions [(->> src-map
                          (map second)
                          (apply max)

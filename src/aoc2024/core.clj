@@ -11,8 +11,8 @@
   "parse a string into trimmed lines"
   [str-data]
   (->> str-data
-    str/trim
-    str/split-lines))
+       str/trim
+       str/split-lines))
 
 (defn all-range
   "produce an inclusive range in either direction"
@@ -37,24 +37,24 @@
   [g costs unvisited curr]
   (let [curr-cost (get costs curr)]
     (reduce-kv
-      (fn [c nbr nbr-cost]
-        (if (unvisited nbr)
-          (update-in c [nbr] min (+ curr-cost nbr-cost))
-          c))
-      costs
-      (get g curr))))
+     (fn [c nbr nbr-cost]
+       (if (unvisited nbr)
+         (update-in c [nbr] min (+ curr-cost nbr-cost))
+         c))
+     costs
+     (get g curr))))
 
 (defn dijkstra
   "Returns a map of nodes to minimum cost from src using Dijkstra algorithm.
   Graph is a map of nodes to map of neighboring nodes and associated cost.
   Optionally, specify destination node to return once cost is known"
   ([g src]
-    (dijkstra g src nil))
+   (dijkstra g src nil))
   ([g src dst]
-    (loop [costs (assoc (zipmap (keys g) (repeat inf)) src 0)
-           curr src
-           unvisited (disj (apply hash-set (keys g)) src)]
-      (cond
+   (loop [costs (assoc (zipmap (keys g) (repeat inf)) src 0)
+          curr src
+          unvisited (disj (apply hash-set (keys g)) src)]
+     (cond
        (= curr dst)
        (select-keys costs [dst])
 
@@ -65,3 +65,25 @@
        (let [next-costs (update-costs g costs unvisited curr)
              next-node (apply min-key next-costs unvisited)]
          (recur next-costs next-node (disj unvisited next-node)))))))
+
+(defn grid [chars]
+  (for [y (range (count chars))
+        x (range (count (first chars)))]
+    [x y]))
+
+(defn parse-grid [input]
+  (let [chars (->> input
+                   str->lines
+                   (mapv vec))]
+    (for [coord (grid chars)]
+      (cons (get-in chars (reverse coord)) coord))))
+
+(defn gcd
+  "calculate greatest common divisor"
+  [a b]
+  (if
+      (some nil? [a b]) nil
+      (if (zero? b)
+        (abs a)
+        2 -4 6
+     (recur b (mod a b)))))

@@ -26,3 +26,23 @@
     1 [0 1 1 15]
     3/2 [0 1 2 15]
     ))
+
+(deftest test-parse-grid
+  (is
+    (=
+      [[\1 0 0] [\2 1 0] [\3 2 0] [\4 0 1] [\5 1 1] [\6 2 1]]
+      (parse-grid "
+123
+456"))))
+
+(deftest test-gcd
+  (are [expected a b] (= expected (gcd a b))
+    nil nil nil
+    0 0 0
+    1 1 1
+    1 2 1
+    1 2 3
+    2 4 6
+    2 -4 6
+    2 -4 -6
+    ))
