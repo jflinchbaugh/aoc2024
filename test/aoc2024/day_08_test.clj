@@ -21,3 +21,5 @@
 (t/deftest test-part-1
   (t/is (= 14 (part-1 input))))
 
+(t/deftest test-part-2
+  (t/is (= 34 (part-2 input))))
