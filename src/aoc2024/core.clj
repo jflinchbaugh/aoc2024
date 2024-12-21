@@ -67,11 +67,15 @@
          (recur next-costs next-node (disj unvisited next-node)))))))
 
 (defn grid [chars]
+  "produce a list of coordinates the size of a grid of lines"
   (for [y (range (count chars))
         x (range (count (first chars)))]
     [x y]))
 
-(defn parse-grid [input]
+(defn parse-grid
+  "parse a multi-line grid of characters into a list
+  of the characters and coordinates"
+  [input]
   (let [chars (->> input
                    str->lines
                    (mapv vec))]
@@ -82,8 +86,7 @@
   "calculate greatest common divisor"
   [a b]
   (if
-      (some nil? [a b]) nil
-      (if (zero? b)
-        (abs a)
-        2 -4 6
+   (some nil? [a b]) nil
+   (if (zero? b)
+     (abs a)
      (recur b (mod a b)))))
