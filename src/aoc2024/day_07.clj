@@ -41,9 +41,34 @@
 
 (comment
   (->> "input/day_07.txt"
-       slurp
-       part-1)
+    slurp
+    part-1)
   ;; => 6231007345478
+
+  .)
+
+(def part2-ops [
+                +
+                *
+                (fn [a b] (parse-long (str a b)))
+                ])
+
+(defn part-2 [input]
+  (->>
+   input
+   str->lines
+   (map
+    (fn [s]
+      ((juxt first rest)
+       (map parse-long (str/split s #"\D+")))))
+   (filter (partial computes? part2-ops))
+   (map first)
+   (reduce +)))
+
+(comment
+  (->> "input/day_07.txt"
+       slurp
+       part-2)
 
   .)
 
