@@ -28,6 +28,8 @@
     ))
 
 (deftest test-parse-grid
+  (is (= [] (parse-grid "")))
+  (is (= [[\1 0 0]] (parse-grid "1")))
   (is
     (=
       [[\1 0 0] [\2 1 0] [\3 2 0] [\4 0 1] [\5 1 1] [\6 2 1]]
